@@ -1,6 +1,6 @@
-# BACKUP REPLACE FILE
+# Copyright 2025 (C) xXHenneBXx
 
-# TWRP device tree for UMIDIGI MP34 (g2315guf_v1_gc_ym_a15c_t)
+# TWRP device tree for UMIDIGI MP34 (A15C)
 
 ```
 # BACKUP REPLACE FILE

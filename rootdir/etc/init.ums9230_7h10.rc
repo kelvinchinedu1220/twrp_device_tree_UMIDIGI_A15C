@@ -1,0 +1,95 @@
+# SPDX-FileCopyrightText: 2016-2023 Unisoc (Shanghai) Technologies Co., Ltd
+# SPDX-License-Identifier: LicenseRef-Unisoc-General-1.0
+import /vendor/etc/init/hw/init.${ro.hardware}.usb.rc
+import /vendor/etc/init/hw/init.ram.rc
+import /vendor/etc/init/hw/init.storage.rc
+import /vendor/etc/init/hw/init.cali.rc
+
+on init
+    start watchdogd
+    chmod 0660 /sys/power/wakeup_count
+
+on post-fs-data
+    setprop vold.post_fs_data_done 1
+    # setprop debug.sf.latch_unsignaled 1
+    insmod ${ro.vendor.ko.mount.point}/socko/akm4377.ko
+
+# Set watchdog timer to 30 seconds and pet it every 10 seconds to get a 20 second margin
+service watchdogd /system/bin/watchdogd 10 30
+    class core
+    oneshot
+    seclabel u:r:watchdogd:s0
+
+on boot
+#UNISOC: Support aging test charging limit function
+    chown system system /sys/class/power_supply/battery/charger.0/stop_charge
+    chmod 0664 /sys/class/power_supply/battery/charger.0/stop_charge
+    
+#hxy: add for smart wake at 20230306    
+    chown system system /sys/devices/platform/soc/soc:ap-apb/20150000.spi/spi_master/spi3/spi3.0/misc/gesture_en
+    chmod 666 /sys/devices/platform/soc/soc:ap-apb/20150000.spi/spi_master/spi3/spi3.0/misc/gesture_en
+    
+#hxy: add for smart wake at 20230404    
+    chown system system /sys/tp_gesture_en/tp_gesture_en
+    chmod 666 /sys/tp_gesture_en/tp_gesture_en
+    
+#hxy: add for factorytest get psensor data at 20230608   
+    chown system system /sys/class/sprd_sensorhub/sensor_hub/raw_data_ps
+    chmod 777 /sys/class/sprd_sensorhub/sensor_hub/raw_data_ps   
+
+    chown system system /mnt/vendor/
+    chmod 777 /mnt/vendor/
+
+    chown system system /mnt/vendor/factorytest.json
+    chmod 777 /mnt/vendor/factorytest.json
+
+    chown system system /mnt/vendor/factorytest_item_count.txt
+    chmod 777 /mnt/vendor/factorytest_item_count.txt
+
+    chown system system /mnt/vendor/gsensor_calibration_falg.txt
+    chmod 777 /mnt/vendor/gsensor_calibration_falg.txt
+
+    chown system system /mnt/vendor/agingtest.json
+    chmod 777 /mnt/vendor/agingtest.json
+
+    chown system system /sys/class/sprd_sensorhub/sensor_hub/calibrator_data
+    chmod 777 /sys/class/sprd_sensorhub/sensor_hub/calibrator_data
+
+    chown system system /sys/class/sprd_sensorhub/sensor_hub/calibrator_cmd
+    chmod 777 /sys/class/sprd_sensorhub/sensor_hub/calibrator_cmd
+	
+	chown system system /sys/touchscreen/firmware_version
+	chmod 664 /sys/touchscreen/firmware_version
+	
+	chown system system /sys/touchscreen/input_name
+	chmod 664 /sys/touchscreen/input_name
+
+
+# for devfreq mm
+    chmod 660 /sys/class/devfreq/isp-dvfs/isp_governor/set_work_freq
+    chown cameraserver system /sys/class/devfreq/isp-dvfs/isp_governor/set_work_freq
+    chmod 660 /sys/class/devfreq/dcam-if-dvfs/dcam-if_governor/set_work_freq
+    chown cameraserver system /sys/class/devfreq/dcam-if-dvfs/dcam-if_governor/set_work_freq
+    chmod 660 /sys/class/devfreq/isp-dvfs/isp_governor/set_work_index
+    chown cameraserver system /sys/class/devfreq/isp-dvfs/isp_governor/set_work_index
+    chmod 660 /sys/class/devfreq/dcam-if-dvfs/dcam-if_governor/set_work_index
+    chown cameraserver system /sys/class/devfreq/dcam-if-dvfs/dcam-if_governor/set_work_index
+    chmod 660 /sys/class/devfreq/isp-dvfs/isp_governor/set_hw_dvfs_en
+    chown cameraserver system /sys/class/devfreq/isp-dvfs/isp_governor/set_hw_dvfs_en
+    chmod 660 /sys/class/devfreq/fd-dvfs/fd_governor/set_work_index
+    chown cameraserver system /sys/class/devfreq/fd-dvfs/fd_governor/set_work_index
+
+on early-boot
+    # Wait for insmod_sh to finish all modules
+    # comment out for bringup
+    # wait_for_prop vendor.all.modules.ready 1
+
+on early-init
+    start insmod-sh
+
+service insmod-sh /vendor/bin/init.insmod.sh /vendor/lib/modules/init.insmod.cfg ${ro.bootmode}
+    class main
+    user root
+    group root system
+    disabled
+    oneshot

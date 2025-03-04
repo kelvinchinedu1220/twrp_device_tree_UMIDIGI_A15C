@@ -1,7 +1,3 @@
-# BACKUP REPLACE FILE
-
-# BACKUP REPLACE FILE
-
 #
 # Copyright (C) 2025 The Android Open Source Project
 #

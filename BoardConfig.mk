@@ -8,7 +8,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/umidigi/A15C
+DEVICE_PATH := device/umidigi/g2315guf_v1_gc_ym_a15c_t
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true

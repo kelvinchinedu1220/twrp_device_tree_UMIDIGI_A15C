@@ -9,9 +9,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/twrp_A15C.mk
+    $(LOCAL_DIR)/twrp_g2315guf_v1_gc_ym_a15c_t.mk
 
 COMMON_LUNCH_CHOICES := \
-    twrp_A15C-user \
-    twrp_A15C-userdebug \
-    twrp_A15C-eng
+    twrp_g2315guf_v1_gc_ym_a15c_t-user \
+    twrp_g2315guf_v1_gc_ym_a15c_t-userdebug \
+    twrp_g2315guf_v1_gc_ym_a15c_t-eng

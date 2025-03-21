@@ -1,0 +1,8 @@
+[
+  {
+    "remote": "github",
+    "repository": "xXHenneBXx/twrp_device_tree_UMIDIGI_A15C",
+    "target_path": "device/umidigi/g2315guf_v1_gc_ym_a15c_t",
+    "branch": "master"
+  }
+]

@@ -41,7 +41,7 @@ AB_OTA_PARTITIONS += \
     product \
     vendor_dlkm \
     system_ext
-BOARD_USES_VENDORBOOT := true
+BOARD_BUILDING_VENDORBOOTIMAGE := true
 
 # Architecture
 TARGET_ARCH := arm64

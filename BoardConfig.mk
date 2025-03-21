@@ -1,4 +1,4 @@
-ery#
+
 # Copyright (C) 2025 The Android Open Source Project
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -12,13 +12,37 @@ ALLOW_MISSING_DEPENDENCIES := true
 # A/B
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    l_agdsp \
+    l_deltanv \
+    l_fixnv1 \
+    l_fixnv2 \
+    l_gdsp \
+    l_ldsp \
+    l_modem \
+    mmcblk0boot1 \
+    pm_sys \
+    sdc \
+    sml \
+    teecfg \
+    trustos \
+    uboot \
+    vbmeta \
+    vbmeta_odm \
+    vbmeta_product \
+    vbmeta_system \
+    vbmeta_system_ext \
+    vbmeta_vendor \
+    vendor_boot \
     vendor \
     odm \
     system \
     product \
     vendor_dlkm \
     system_ext
-BOARD_USES_RECOVERY_AS_BOOT := true
+BOARD_USES_RECOVERY_AS_BOOT := false
+BUILDING_VENDOR_BOOT_IMAGE := true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -41,6 +65,8 @@ TARGET_NO_BOOTLOADER := true
 
 # Display
 TARGET_SCREEN_DENSITY := 320
+TARGET_SCREEN_WIDTH := 720
+TARGET_SCREEN_HEIGHT :=1650
 
 # Kernel
 BOARD_BOOT_HEADER_VERSION := 4
@@ -132,12 +158,12 @@ VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
 # TWRP Configuration
-TW_THEME := portrait_hdpi
+#TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := false
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
-TW_INCLUDE_REPACKTOOLS := true  
+TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_FBE := true   
 TW_INCLUDE_FBE_METADATA := true
 TW_INCLUDE_EXT4 := true
@@ -145,16 +171,13 @@ TW_INCLUDE_F2FS := true
 TW_INCLUDE_EROFS := true
 TW_INCLUDE_VFAT := true
 TW_HAS_SELINUX := true
-TWHAVE_SELINUX := true
 TW_NO_CPU_TEMP := true
-TW_INCLUDE_INJECTTWRP := true
 TW_INCLUDE_LIBRESETPROP := true
 TW_USE_EXTERNAL_STORAGE := true
-TW_DEFAULT_MOUNT_RW := true
+#TW_DEFAULT_MOUNT_RW := true
 TW_INCLUDE_FUSE := true
-TW_ENABLE_ADB_SIDELINE := true
+TW_ENABLE_ADB_SIDELOAD := true
 TW_HAS_MTP := true
-TW_HAS_SYSTEM_AS_ROOT := true
 TW_NO_SCREEN_TIMEOUT := true
-TW_HAS_SYSTEM_AS_ROOT := true
-TW_HAS_BOOT_PARTITION := true
+#TW_HAS_SYSTEM_AS_ROOT := true
+#TW_HAS_BOOT_PARTITION := true

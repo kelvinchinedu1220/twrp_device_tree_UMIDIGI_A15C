@@ -10,7 +10,7 @@
 
 set -e
 
-DEVICE=A15C
+DEVICE=g2315guf_v1_gc_ym_a15c_t
 VENDOR=umidigi
 
 # Load extract_utils and do some sanity checks

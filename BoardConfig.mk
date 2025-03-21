@@ -41,7 +41,6 @@ AB_OTA_PARTITIONS += \
     product \
     vendor_dlkm \
     system_ext
-BOARD_USES_RECOVERY_AS_BOOT := false
 BUILDING_VENDOR_BOOT_IMAGE := true
 
 # Architecture

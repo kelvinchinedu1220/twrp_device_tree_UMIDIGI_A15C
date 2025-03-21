@@ -1,7 +1,3 @@
-# BACKUP REPLACE FILE
-
-# BACKUP REPLACE FILE
-
 #
 # Copyright (C) 2025 The Android Open Source Project
 #
@@ -41,7 +37,7 @@ PRODUCT_PACKAGES += \
     otapreopt_script
 
 # API levels
-PRODUCT_SHIPPING_API_LEVEL := 33
+PRODUCT_SHIPPING_API_LEVEL := 32
 
 # fastbootd
 PRODUCT_PACKAGES += \
@@ -98,8 +94,8 @@ PRODUCT_PACKAGES += \
     init.ums9230_zebu.rc \
     init.ums9230_zebu.usb.rc \
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.ums9230_4h10_go:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.ums9230_4h10_go
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/rootdir/etc/fstab.ums9230_4h10_go:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.ums9230_4h10_go
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \

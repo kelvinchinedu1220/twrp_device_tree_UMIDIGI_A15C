@@ -1,6 +1,7 @@
 on init
     # Loading kernel modules in background
     start insmod_sh
+    setprop ro.twrp.version xXHenneBXx-V3.7.1_12.1
     
 service insmod_sh /vendor/bin/init.insmod.sh /vendor/etc/init.insmod.cfg
     class main

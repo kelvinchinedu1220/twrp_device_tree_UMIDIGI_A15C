@@ -107,6 +107,8 @@ on boot
     chmod 660 /sys/class/power_supply/battery/charger.0/charge_pump_present
     chmod 660 /sys/class/power_supply/battery/charger.0/charge_pump_current
 
+    setprop ro.twrp.version xXHenneBXx-V3.7.1_12.1
+
 on fs
     #mkdir /data/misc/bluedroid 0770 bluetooth net_bt_stack
     mkdir /data/misc/bluetooth 0770 system system

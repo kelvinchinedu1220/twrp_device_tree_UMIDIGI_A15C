@@ -286,3 +286,4 @@ persist.sys.usb.config=none
 #
 # RECOVERY UI BUILD PROPERTIES
 #
+ro.twrp.version=xXHenneBXx-V3.7.1_12.1

@@ -42,6 +42,7 @@ vendor \
 vendor_boot \
 vendor_dlkm
 BUILDING_VENDOR_BOOT_IMAGE := true
+BUILDING_VENDORBOOT_IMAGE := true
 
 # Architecture
 TARGET_ARCH := arm64

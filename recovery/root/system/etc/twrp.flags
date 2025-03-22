@@ -53,4 +53,4 @@
 /usb_otg    auto        /dev/block/sdd1 /dev/block/sdd        flags=display="USB-OTG 5";backup=0
 
 /vendor_boot         emmc      /dev/block/by-name/vendor_boot       flags=display="vendor_boot";slotselect;backup=1;flashimg=1
-# Online TWRP Builder By Team Hovatek
+# Online TWRP Builder By xXHenneBXx

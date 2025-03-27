@@ -8,18 +8,20 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
+
 # Inherit some common TWRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
+$(call inherit-product, vendor/twrp/config/BoardConfigTWRP.mk)
+$(call inherit-product, vendor/twrp/Android.mk)
 
-# Inherit from g2315guf_v1_gc_ym_a15c_t device
+# Inherit from g2315guf_v1_gc_ym_a15c_t
 $(call inherit-product, device/umidigi/g2315guf_v1_gc_ym_a15c_t/device.mk)
 
 PRODUCT_DEVICE := g2315guf_v1_gc_ym_a15c_t
 PRODUCT_NAME := twrp_g2315guf_v1_gc_ym_a15c_t
-PRODUCT_BRAND := UMIDIGI
-PRODUCT_MODEL := MP34
-PRODUCT_MANUFACTURER := umidigi
-
+PRODUCT_BRAND := twrp
+PRODUCT_MODEL := xXHenneBXx
+PRODUCT_MANUFACTURER := UMIDIGI
 PRODUCT_GMS_CLIENTID_BASE := android-sunvov
 
 PRODUCT_BUILD_PROP_OVERRIDES += \

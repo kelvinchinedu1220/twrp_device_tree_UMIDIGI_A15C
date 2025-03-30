@@ -34,7 +34,6 @@ on init
     mkdir /storage/sdcard1
     mkdir /storage/sdcard0
     symlink /storage/sdcard0 /mnt/sdcard
-    symlink /storage/sdcard1 /mnt/sdcard1
     symlink /system/etc/bluetooth /etc/bluetooth
 
     mkdir /systeminfo 0777 system system
@@ -107,8 +106,6 @@ on boot
     chmod 660 /sys/class/power_supply/battery/charger.0/keep_awake
     chmod 660 /sys/class/power_supply/battery/charger.0/charge_pump_present
     chmod 660 /sys/class/power_supply/battery/charger.0/charge_pump_current
-
-    setprop ro.twrp.version xXHenneBXx-V3.7.1_12.1
 
 on fs
     #mkdir /data/misc/bluedroid 0770 bluetooth net_bt_stack

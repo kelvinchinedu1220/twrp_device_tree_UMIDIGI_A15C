@@ -6,6 +6,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),g2315guf_v1_gc_ym_a15c_t)
+ifeq ($(TARGET_DEVICE),A15C)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif

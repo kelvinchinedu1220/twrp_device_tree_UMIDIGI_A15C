@@ -11,7 +11,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
 # A/B
-ENABLE_VIRTUAL_AB := true
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
 
 # Enable project quotas and casefolding for emulated storage without sdcardfs
@@ -21,8 +20,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 #$(shell mkdir -p out/target/product/g2315guf_v1_gc_ym_a15c_t/vendor_ramdisk)
 #$(shell cp -r $(LOCAL_PATH)/recovery/root/* out/target/product/A15C/vendor_ramdisk/)
 #$(shell cp $(LOCAL_PATH)/prebuilts/kernel out/target/product/g2315guf_v1_gc_ym_a15c_t/)
-
-PRODUCT_BUILD_VENDOR_BOOT_IMAGE := true
 
 # Recovery HAL
 PRODUCT_PACKAGES += \
@@ -89,9 +86,12 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 # Product characteristics
 PRODUCT_CHARACTERISTICS := defaults
 
-# Vendor Ramdisk
+# twrp.flags
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/twrp.flags:vendor_ramdisk/system/etc/twrp.flags \
+
+# UEVENT Files
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_zebu.rc:vendor_ramdisk/ueventd.ums9230_zebu.rc \
     $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_haps.rc:vendor_ramdisk/ueventd.ums9230_haps.rc \
     $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_7h10.rc:vendor_ramdisk/ueventd.ums9230_7h10.rc \
@@ -99,11 +99,17 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_1h10_go.rc:vendor_ramdisk/ueventd.ums9230_1h10_go.rc \
     $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_1h10.rc:vendor_ramdisk/ueventd.ums9230_1h10.rc \
     $(LOCAL_PATH)/rootdir/etc/ueventd.A15C.rc:vendor_ramdisk/ueventd.A15C.rc \
+
+# INIT Files
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/snapuserd.rc:vendor_ramdisk/snapuserd.rc \
     $(LOCAL_PATH)/rootdir/etc/servicemanager.recovery.rc:vendor_ramdisk/servicemanager.recovery.rc \
     $(LOCAL_PATH)/rootdir/etc/init.custom.rc:vendor_ramdisk/init.custom.rc \
     $(LOCAL_PATH)/rootdir/etc/init.recovery.A15C.rc:vendor_ramdisk/init.recovery.A15C.rc \
-    $(LOCAL_PATH)/rootdir/etc/init.recovery.common.rc:vendor_ramdisk/init.recovery.common.rc \
+    $(LOCAL_PATH)/rootdir/etc/init.recovery.common.rc:vendor_ramdisk/init.recovery.common.rc
+
+# first_stage_Ramdisk
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_zebu:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_zebu \
     $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_haps:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_haps \
     $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_7h10:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_7h10 \
@@ -112,12 +118,12 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_4h10:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_4h10 \
     $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_1h10_go:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_1h10_go \
     $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_1h10:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_1h10 \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_zebu:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_zebu \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_zebu:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_zebu 
+    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.g2315guf_v1_gm_yc_a15c_t:vendor_ramdisk/first_stage_ramdisk/fstab.g2315guf_v1_gm_yc_a15c_t \
+    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.A15C:vendor_ramdisk/first_stage_ramdisk/fstab.A15C
 
 # Copy dtb.img to out
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilts/dtb.img:dtb.img
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/prebuilts/dtb.img:dtb.img
 
 #Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \

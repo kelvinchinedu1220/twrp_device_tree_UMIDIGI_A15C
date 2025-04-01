@@ -56,7 +56,6 @@ BUILD_BROKEN_OUTSIDE_INCLUDE_DIRS  := true
 #BUILD_BROKEN_TREBLE_SYSPROP_NEVERALLOW := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 #BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
-#BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
 #BUILD_BROKEN_PREBUILT_ELF_FILES := true
 #BUILD_BROKEN_DUP_RULES := true
 
@@ -143,7 +142,7 @@ ifeq ($(BOARD_BOOT_HEADER_VERSION),4)
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 #BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
 BOARD_INCLUDE_DTB_IN_VENDOR_BOOTIMG := true
-BOARD_VENDOR_RAMDISK := $(TARGET_OUT_RECOVERY)/root
+#TARGET_VENDOR_RAMDISK := $(TARGET_OUT_RECOVERY_ROOT)
 endif
 BOARD_VENDOR_RAMDISK_USE_LZ4 := true
 BOARD_VENDOR_RAMDISK_COMPRESSED := lz4-l
@@ -152,19 +151,22 @@ BOARD_RECOVERY_COMPRESSED := lz4-l
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_RAMDISK_COMPRESSED := lz4-l
 
-BOARD_VENDOR_RAMDISK_FRAGMENTS := \
-    vendor_ramdisk \
-    recovery
+TARGET_VENDOR_RAMDISK_FRAGMENT_DIRS := \
+    $(TARGET_RECOVERY_ROOT_OUT) \
+    $(TARGET_VENDOR_RAMDISK_OUT)
+
+#BOARD_VENDOR_RAMDISK_FRAGMENTS := \
+#    ramdisk-recovery.cpio
 
 # Explicitly set the kernel version for depmod
 KERNEL_VERSION := 5.4
 BOARD_VENDOR_KERNEL_MODULES_DEPMOD_VERSION := $(KERNEL_VERSION)
 
-MODULES := $(wildcard $(DEVICE_PATH)/prebuilts/lib/modules/*.ko)
-
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(MODULES)
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(MODULES)
-BOARD_KERNEL_MODULES := $(DEVICE_PATH)/prebuilts/lib/modules/sprd-drm.ko
+ALL_MODULES := $(wildcard $(DEVICE_PATH)/prebuilts/lib/modules/*.ko)
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(ALL_MODULES)
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(ALL_MODULES)
+BOARD_KERNEL_MODULES := "sprd_wdt_fiq.ko sprd_sip_svc.ko sprd_systimer.ko sprd_time_sync.ko sprd_time_sync_cp.ko clk-sprd.ko ums9230-clk.ko spi-sprd-adi.ko sprd-sc27xx-spi.ko rtc-sc27xx.ko sc2730-regulator.ko ump518-regulator.ko sprd_soc_id.ko rpmb.ko ufs-sprd_qogirl6.ko sprd_hwspinlock.ko nvmem-sc27xx-efuse.ko nvmem_sprd_cache_efuse.ko nvmem_sprd_efuse.ko i2c-sprd.ko i2c-sprd-hw-v2.ko sprd-cpufreq-v2.ko sprd-cpufreq-public.ko sprd_7sreset.ko sprd_manufacturer_model.ko trusty.ko trusty-pm.ko trusty-log.ko trusty-irq.ko trusty-ipc.ko trusty-virtio.ko sprd_shm.ko gpio-eic-sprd.ko gpio-sprd.ko gpio-pmic-eic-sprd.ko sdhci-sprd.ko mmc_hsq.ko mmc_swcq.ko rtc-sc27xx.ko sprd_pmic_syscon.ko sprd_pmic_refout.ko sprd_pdbg.ko sprd_power_stat.ko kfifo_buf.ko sensorhub.ko sprd_power_manager.ko unisoc-mailbox.ko sprd-sipc-virt-bus.ko sipc-core.ko spipe.ko spool.ko sipx.ko seth.ko sprd_modem_loader.ko sprd_iq.ko slog_bridge.ko sbuf_bridge.ko sblock_bridge.ko usb_f_vser.ko"
+BOARD_KERNEL_MODULES_LOAD := $(BOARD_KERNEL_MODULES)
 BOARD_KERNEL_BINARIES := kernel dtb.img
 
 # Kernel - prebuilt
@@ -194,16 +196,6 @@ BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
 BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_SYSTEM_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_SYSTEM_ROLLBACK_INDEX := 1
-BOARD_AVB_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_BOOT_ROLLBACK_INDEX := 1
-BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 1
 
 # VINTF
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml

@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-LOCAL_PATH := device/incar/I11_Plus
+LOCAL_PATH := device/umidigi/A15C
 
 # Dynamic Partitions stuff
 PRODUCT_USE_DYNAMIC_PARTITIONS := true

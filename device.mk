@@ -1,41 +1,63 @@
 #
-# Copyright (C) 2025 The Android Open Source Project
+# Copyright (C) 2023 The Android Open Source Project
+# Copyright (C) 2023 SebaUbuntu's TWRP device tree generator
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Enable updating of APEXes
-$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+LOCAL_PATH := device/incar/I11_Plus
 
-# GSI AVB keys
-$(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
+# Dynamic Partitions stuff
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# Shipping VNDK
+PRODUCT_TARGET_VNDK_VERSION := 33
+
+# Shipping API level
+PRODUCT_SHIPPING_API_LEVEL := 33
+
+PRODUCT_PLATFORM := ums9230
+
+# Virtual A/B
+ENABLE_VIRTUAL_AB := true
 
 # A/B
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
+AB_OTA_UPDATER := true
+AB_OTA_PARTITIONS += \
+    boot \
+    sdc \
+    trustos \
+    sml \
+    teecfg \
+    vbmeta \
+    vbmeta_system \
+    vbmeta_system_ext \
+    vbmeta_vendor \
+    vbmeta_product \
+    dtbo \
+    uboot \
+    vendor_boot \
+    l_modem \
+    l_gdsp \
+    l_ldsp \
+    l_agdsp \
+    pm_sys \
+    l_fixnv1 \
+    l_fixnv2 \
+    l_deltanv \
+    vendor_dlkm \
+    system \
+    system_ext \
+    vendor \
+    product
 
-# Enable project quotas and casefolding for emulated storage without sdcardfs
-$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
-
-# Overriding Shell Commands
-#$(shell mkdir -p out/target/product/g2315guf_v1_gc_ym_a15c_t/vendor_ramdisk)
-#$(shell cp -r $(LOCAL_PATH)/recovery/root/* out/target/product/A15C/vendor_ramdisk/)
-#$(shell cp $(LOCAL_PATH)/prebuilts/kernel out/target/product/g2315guf_v1_gc_ym_a15c_t/)
-
-# Recovery HAL
+# Update engine
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-impl.recovery \
-    android.hardware.boot@1.2-service
-
-# Health
-PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
-
-# fastbootd
-PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.1-impl-mock \
-    fastbootd
+    otapreopt_script \
+    cppreopts.sh \
+    update_engine \
+    update_verifier \
+    update_engine_sideload
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -43,88 +65,27 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=erofs \
     POSTINSTALL_OPTIONAL_system=true
 
-AB_OTA_POSTINSTALL_CONFIG += \
-    RUN_POSTINSTALL_vendor=true \
-    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
-    FILESYSTEM_TYPE_vendor=erofs \
-    POSTINSTALL_OPTIONAL_vendor=true
+# Boot control HAL
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.2-impl-recovery \
+    android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-service \
 
 PRODUCT_PACKAGES += \
-    checkpoint_gc \
-    otapreopt_script \
-    update_engine \
-    update_engine_sideload \
-    update_verifier
+    bootctrl.ums9230 \
+    bootctrl.ums9230.recovery
 
-# TWRP Recovery
+PRODUCT_PACKAGES_DEBUG += \
+    bootctrl \
+    update_engine_client
+
+# Health Hal
 PRODUCT_PACKAGES += \
-    twrp.flags \
-    recovery.fstab \
-    init.recovery.g2315guf_v1_gc_ym_a15c_t.rc \
-    init.recovery.A15C.rc \
-    init.recovery.common.rc \
-    init.custom.rc \
-    sprd-drm.ko \
-    recovery \
-    bootctrl.ums9230 
-    
-# EROFS utils
-PRODUCT_HOST_PACKAGES += \
-    mkfs.erofs \
-    dump.erofs \
-    fsck.erofs 
+    android.hardware.health@2.1-impl \
+    android.hardware.health@2.1-service
 
-# API levels
-PRODUCT_SHIPPING_API_LEVEL := 32
-
-# Overlays
-PRODUCT_ENFORCE_RRO_TARGETS := *
-
-# Partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-
-# Product characteristics
-PRODUCT_CHARACTERISTICS := defaults
-
-# twrp.flags
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/twrp.flags:vendor_ramdisk/system/etc/twrp.flags \
-
-# UEVENT Files
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_zebu.rc:vendor_ramdisk/ueventd.ums9230_zebu.rc \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_haps.rc:vendor_ramdisk/ueventd.ums9230_haps.rc \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_7h10.rc:vendor_ramdisk/ueventd.ums9230_7h10.rc \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_4h10_go.rc:vendor_ramdisk/ueventd.ums9230_4h10_go.rc \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_1h10_go.rc:vendor_ramdisk/ueventd.ums9230_1h10_go.rc \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.ums9230_1h10.rc:vendor_ramdisk/ueventd.ums9230_1h10.rc \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.A15C.rc:vendor_ramdisk/ueventd.A15C.rc \
-
-# INIT Files
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/snapuserd.rc:vendor_ramdisk/snapuserd.rc \
-    $(LOCAL_PATH)/rootdir/etc/servicemanager.recovery.rc:vendor_ramdisk/servicemanager.recovery.rc \
-    $(LOCAL_PATH)/rootdir/etc/init.custom.rc:vendor_ramdisk/init.custom.rc \
-    $(LOCAL_PATH)/rootdir/etc/init.recovery.A15C.rc:vendor_ramdisk/init.recovery.A15C.rc \
-    $(LOCAL_PATH)/rootdir/etc/init.recovery.common.rc:vendor_ramdisk/init.recovery.common.rc
-
-# first_stage_Ramdisk
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_zebu:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_zebu \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_haps:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_haps \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_7h10:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_7h10 \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_6h10:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_6h10 \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_4h10_go:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_4h10_go \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_4h10:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_4h10 \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_1h10_go:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_1h10_go \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.ums9230_1h10:vendor_ramdisk/first_stage_ramdisk/fstab.ums9230_1h10 \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.g2315guf_v1_gm_yc_a15c_t:vendor_ramdisk/first_stage_ramdisk/fstab.g2315guf_v1_gm_yc_a15c_t \
-    $(LOCAL_PATH)/rootdir/first_stage_ramdisk/fstab.A15C:vendor_ramdisk/first_stage_ramdisk/fstab.A15C
-
-# Copy dtb.img to out
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/prebuilts/dtb.img:dtb.img
-
-#Soong namespaces
-PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH)
+# Fastbootd stuff
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery \
+    fastbootd

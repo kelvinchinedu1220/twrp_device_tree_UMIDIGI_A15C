@@ -1,8 +1,2 @@
 [
-  {
-    "remote": "github",
-    "repository": "xXHenneBXx/twrp_device_tree_UMIDIGI_A15C",
-    "target_path": "device/umidigi/A15C",
-    "branch": "main"
-  }
 ]

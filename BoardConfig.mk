@@ -6,6 +6,9 @@
 
 DEVICE_PATH := device/umidigi/A15C
 
+# For building with minimal manifest
+ALLOW_MISSING_DEPENDENCIES := true
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -24,11 +27,6 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
 TARGET_IS_64_BIT := true
 TARGET_USES_64_BIT_BINDER := true
 TARGET_SUPPORTS_64_BIT_APPS := true
-
-# Build hack
-BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
-#BUILD_BROKEN_PREBUILT_ELF_FILES := true
-BUILD_BROKEN_DUP_RULES := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := A15C

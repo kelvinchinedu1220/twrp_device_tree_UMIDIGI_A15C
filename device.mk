@@ -10,11 +10,9 @@ LOCAL_PATH := device/umidigi/A15C
 # Dynamic Partitions stuff
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# Shipping VNDK
-PRODUCT_TARGET_VNDK_VERSION := 33
-
-# Shipping API level
-PRODUCT_SHIPPING_API_LEVEL := 33
+# VNDK / SDK
+TARGET_SUPPORTS_VNDK := true
+BOARD_VNDK_VERSION := current
 
 PRODUCT_PLATFORM := ums9230
 
